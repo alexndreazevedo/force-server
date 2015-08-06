@@ -6,7 +6,9 @@ var express = require('express'),
     app = express(),
     root = argv.r || argv.root || process.env.ROOT || '.',
     port = argv.p || argv.port || process.env.PORT || '8200',
-    debug = argv.d || argv.debug || process.env.DEBUG || false;
+    debug = argv.d || argv.debug || process.env.DEBUG || false,
+    https = require('https'),
+    fs = require('fs');
 
 if (argv.h || argv.help) {
     console.log('USAGE Example:');
@@ -53,7 +55,17 @@ app.all('*', function (req, res, next) {
     }
 });
 
-app.listen(port, function () {
+
+var sslOptions = {
+  key: fs.readFileSync('./ssl/server.key'),
+  cert: fs.readFileSync('./ssl/server.crt'),
+  ca: fs.readFileSync('./ssl/ca.crt'),
+  requestCert: true,
+  rejectUnauthorized: false
+};
+
+var secureServer = https.createServer(sslOptions,app).listen(port, function(){
+  console.log("Secure Express server listening on port 3030");
     console.log('force-server listening on port ' + port);
     console.log('Root: ' + root);
     open("http://localhost:" + port);
