@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ccoenraets/force-server.git"
+    "url": "https://github.com/alexndreazevedo/force-server.git"
   },
   "keywords": [
     "salesforce",
@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/ccoenraets/force-server/issues"
   },
-  "homepage": "https://github.com/ccoenraets/force-server",
+  "homepage": "https://github.com/alexndreazevedo/force-server",
   "dependencies": {
     "body-parser": "~1.9.0",
     "express": "~4.9.8",

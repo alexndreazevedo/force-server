@@ -3,18 +3,26 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     open = require("open"),
     argv = require('minimist')(process.argv.slice(2)),
-    app = express(),
     root = argv.r || argv.root || process.env.ROOT || '.',
     port = argv.p || argv.port || process.env.PORT || '8200',
     debug = argv.d || argv.debug || process.env.DEBUG || false,
     https = require('https'),
-    fs = require('fs');
+    fs = require('fs'),
+    app = express();
 
 if (argv.h || argv.help) {
     console.log('USAGE Example:');
     console.log('force-server --port 8200 --root /users/chris/projects --debug');
     return;
 }
+
+var credentials = {
+  key: fs.readFileSync(root + '/ssl/server.key'),
+  cert: fs.readFileSync(root + '/ssl/server.crt'),
+  ca: fs.readFileSync(root + '/ssl/ca.crt'),
+  requestCert: true,
+  rejectUnauthorized: false
+};
 
 app.use(bodyParser.json());
 
@@ -55,18 +63,6 @@ app.all('*', function (req, res, next) {
     }
 });
 
+var ssl = https.createServer(credentials, app);
 
-var sslOptions = {
-  key: fs.readFileSync('./ssl/server.key'),
-  cert: fs.readFileSync('./ssl/server.crt'),
-  ca: fs.readFileSync('./ssl/ca.crt'),
-  requestCert: true,
-  rejectUnauthorized: false
-};
-
-var secureServer = https.createServer(sslOptions,app).listen(port, function(){
-  console.log("Secure Express server listening on port 3030");
-    console.log('force-server listening on port ' + port);
-    console.log('Root: ' + root);
-    open("http://localhost:" + port);
-});
+ssl.listen(port);
