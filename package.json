@@ -1,13 +1,13 @@
 {
-  "name": "ssl-force-server",
+  "name": "ssl-forceserver",
   "version": "0.1-beta",
   "description": "Development server for Force.com with SSL",
   "bin": {
-    "ssl-force-server": "./bin/ssl-force-server.js"
+    "ssl-forceserver": "./bin/ssl-forceserver.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexndreazevedo/ssl-force-server.git"
+    "url": "https://github.com/alexndreazevedo/ssl-forceserver.git"
   },
   "keywords": [
     "ssl",
@@ -24,9 +24,9 @@
   ]
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alexndreazevedo/ssl-force-server/issues"
+    "url": "https://github.com/alexndreazevedo/ssl-forceserver/issues"
   },
-  "homepage": "https://github.com/alexndreazevedo/ssl-force-server",
+  "homepage": "https://github.com/alexndreazevedo/ssl-forceserver",
   "dependencies": {
     "body-parser": "~1.9.0",
     "express": "~4.9.8",

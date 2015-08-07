@@ -29,7 +29,7 @@ var credentials = {
     
 
 if (argv.h || argv.help) {
-    console.log('Usage: force-server --port 8200 --root ~/projects/force-server --debug [--ssl --ssl-key server.key --ssl-cert server.crt --ssl-ca ca.crt]\n');
+    console.log('Usage: ssl-forceserver --port 8200 --root ~/projects/force-server --debug [--ssl --ssl-key server.key --ssl-cert server.crt --ssl-ca ca.crt]\n');
     console.log('ROOT\t\t-r, --root\t\tChange the root directory of running application. Default is .');
     console.log('PORT\t\t-p, --port\t\tSet the port to access server. Default is 8200');
     console.log('DEBUG\t\t-d, --debug\t\tShow debug of server whe running. Disabled by default\n');
@@ -92,7 +92,7 @@ app.all('*', function (req, res, next) {
 });
 
 (ssl ? https.createServer(credentials, app) : app).listen(port, function() {
-    console.log('FORCE-SERVER is running on ' + (ssl ? 'SSL' : 'unsecure') + ' mode');
+    console.log('SSL-FORCE-SERVER is running on ' + (ssl ? 'SSL' : 'unsecure') + ' mode');
     console.log('> listening on port: ' + port);
     console.log('> root directory: ' + root);
 });

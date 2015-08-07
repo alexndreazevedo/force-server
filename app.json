@@ -1,7 +1,7 @@
 {
-    "name": "SSL Force Server",
-    "description": "Simple development server for Force.com, based on force-server, from Christophe Coenraets (https://github.com/ccoenraets). CORS Proxy for Salesforce REST calls + Web Server to load application assets.",
-    "repository": "https://github.com/alexndreazevedo/ssl-force-server",
+    "name": "SSL ForceServer",
+    "description": "Simple development server for Force.com, based on force-server extendind for allow SSL conections, created by Christophe Coenraets (https://github.com/ccoenraets). CORS Proxy for Salesforce REST calls + Web Server to load application assets.",
+    "repository": "https://github.com/alexndreazevedo/ssl-forceserver",
     "logo": "https://developer.salesforce.com/resource/images/platform-force-cloud.png",
     "keywords": ["ssl", "cors", "nodejs", "proxy", "salesforce", "rest", "force.com"],
     "env": {
