@@ -95,4 +95,5 @@ app.all('*', function (req, res, next) {
     console.log('SSL-FORCE-SERVER is running on ' + (ssl ? 'SSL' : 'unsecure') + ' mode');
     console.log('> listening on port: ' + port);
     console.log('> root directory: ' + root);
+    open("http://localhost:" + port);
 });
