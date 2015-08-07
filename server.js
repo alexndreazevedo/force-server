@@ -1,7 +1,8 @@
 // Load dependencies
 var express = require('express'),
     request = require('request'),
-    bodyParser = require('body-parser'),
+    bodyparser = require('body-parser'),
+    querystring = require("querystring"),
     open = require("open"),
     https = require('https'),
     fs = require('fs'),
@@ -40,7 +41,7 @@ if (argv.h || argv.help) {
     return;
 }
 
-app.use(bodyParser.json());
+app.use(bodyparser.json());
 
 // Server application
 app.use(express.static(root));
@@ -65,24 +66,28 @@ app.all('*', function (req, res, next) {
             res.status(500).send({ error: 'Resource Not Found (Web Server) or no Target-Endpoint header in the request (Proxy Server)' });
             return;
         }
+
         var url = targetURL + req.url;
+
         if (debug) console.log(req.method + ' ' + url);
         if (debug) console.log('Request body:');
         if (debug) console.log(req.body);
+
         request({
             url: url, 
             method: req.method, 
-            json: req.body, 
+            form: req.body, 
             headers: {
-                'Authorization': req.header('Authorization')
+                'Authorization': req.header('Authorization'),
+		'Content-type': 'application/x-www-form-urlencoded'
             }
-         }, function (error, response, body) {
-                if (error) {
-                    console.error('Error:' + response.statusCode);
-                }
-                if (debug) console.log('Response body:');
-                if (debug) console.log(body);
-            }).pipe(res);
+        }, function (error, response, body) {
+            if (error) {
+                console.error('Error:' + response.statusCode);
+            }
+            if (debug) console.log('Response body:');
+            if (debug) console.log(body);
+        }).pipe(res);
     }
 });
 
