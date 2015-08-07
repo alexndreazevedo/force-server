@@ -1,28 +1,44 @@
+// Load dependencies
 var express = require('express'),
     request = require('request'),
     bodyParser = require('body-parser'),
     open = require("open"),
-    argv = require('minimist')(process.argv.slice(2)),
-    root = argv.r || argv.root || process.env.ROOT || '.',
-    port = argv.p || argv.port || process.env.PORT || '8200',
-    debug = argv.d || argv.debug || process.env.DEBUG || false,
     https = require('https'),
     fs = require('fs'),
-    app = express();
+    app = express(),
+    argv = require('minimist')(process.argv.slice(2));
+
+// Load settings
+var root        = argv.r || argv.root || process.env.ROOT || '.',
+    port        = argv.p || argv.port || process.env.PORT || '8200',
+    debug       = argv.d || argv.debug || process.env.DEBUG || false,
+    ssl         = argv.s || argv.ssl || process.env.SSL || false,
+    ssl_key     = argv.sslkey || argv['ssl-key'] || process.env.SSL_KEY || 'ssl/server.key',
+    ssl_cert    = argv.sslcert || argv['ssl-cert'] || process.env.SSL_CERT || 'ssl/server.crt',
+    ssl_ca      = argv.sslca || argv['ssl-ca'] || process.env.SSL_CA || 'ssl/ca.crt';
+
+// SSL credentials
+var credentials = {
+    key: fs.readFileSync(root + '/' + ssl_key),
+    cert: fs.readFileSync(root + '/' + ssl_cert),
+    ca: fs.readFileSync(root + '/' + ssl_ca),
+    requestCert: true,
+    rejectUnauthorized: false
+};
+    
 
 if (argv.h || argv.help) {
-    console.log('USAGE Example:');
-    console.log('force-server --port 8200 --root /users/chris/projects --debug');
+    console.log('Usage: force-server --port 8200 --root ~/projects/force-server --debug [--ssl --ssl-key server.key --ssl-cert server.crt --ssl-ca ca.crt]\n');
+    console.log('ROOT\t\t-r, --root\t\tChange the root directory of running application. Default is .');
+    console.log('PORT\t\t-p, --port\t\tSet the port to access server. Default is 8200');
+    console.log('DEBUG\t\t-d, --debug\t\tShow debug of server whe running. Disabled by default\n');
+    console.log('SSL\t\t-s, --ssl\t\tEnable the SSL Mode. Disabled by default');
+    console.log('SSL options:');
+    console.log('\t\t-sslkey, --ssl-key\tSet the key. Default is ssl/server.key');
+    console.log('\t\t-sslcert, --ssl-cert\tSet the cert. Default is ssl/server.crt');
+    console.log('\t\t-sslca, --ssl-ca\tSet the ca. Default is ssl/ca.crt');
     return;
 }
-
-var credentials = {
-  key: fs.readFileSync(root + '/ssl/server.key'),
-  cert: fs.readFileSync(root + '/ssl/server.crt'),
-  ca: fs.readFileSync(root + '/ssl/ca.crt'),
-  requestCert: true,
-  rejectUnauthorized: false
-};
 
 app.use(bodyParser.json());
 
@@ -43,6 +59,7 @@ app.all('*', function (req, res, next) {
         // CORS Preflight
         res.send();
     } else {
+        // Allow to set target avoiding expose it
         var targetURL = req.header('Target-URL');
         if (!targetURL) {
             res.status(500).send({ error: 'Resource Not Found (Web Server) or no Target-Endpoint header in the request (Proxy Server)' });
@@ -52,10 +69,16 @@ app.all('*', function (req, res, next) {
         if (debug) console.log(req.method + ' ' + url);
         if (debug) console.log('Request body:');
         if (debug) console.log(req.body);
-        request({ url: url, method: req.method, json: req.body, headers: {'Authorization': req.header('Authorization')} },
-            function (error, response, body) {
+        request({
+            url: url, 
+            method: req.method, 
+            json: req.body, 
+            headers: {
+                'Authorization': req.header('Authorization')
+            }
+         }, function (error, response, body) {
                 if (error) {
-                    console.error('error: ' + response.statusCode)
+                    console.error('Error:' + response.statusCode);
                 }
                 if (debug) console.log('Response body:');
                 if (debug) console.log(body);
@@ -63,6 +86,8 @@ app.all('*', function (req, res, next) {
     }
 });
 
-var ssl = https.createServer(credentials, app);
-
-ssl.listen(port);
+(ssl ? https.createServer(credentials, app) : app).listen(port, function() {
+    console.log('FORCE-SERVER is running on ' + (ssl ? 'SSL' : 'unsecure') + ' mode');
+    console.log('> listening on port: ' + port);
+    console.log('> root directory: ' + root);
+});
