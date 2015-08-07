@@ -1,6 +1,6 @@
 {
   "name": "ssl-forceserver",
-  "version": "0.1-beta",
+  "version": "0.1.0",
   "description": "Development server for Force.com with SSL",
   "bin": {
     "ssl-forceserver": "./bin/ssl-forceserver.js"
@@ -21,7 +21,7 @@
   "author": [
     "Christophe Coenraets <ccoenraets@gmail.com> (http://coenraets.org/)",
     "Alexandre Azevedo <alexndreazevedo@gmail.com> (http://alexandreazevedo.me)"
-  ]
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/alexndreazevedo/ssl-forceserver/issues"
