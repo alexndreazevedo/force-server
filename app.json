@@ -5,12 +5,21 @@
     "logo": "https://developer.salesforce.com/resource/images/platform-force-cloud.png",
     "keywords": ["ssl", "cors", "nodejs", "proxy", "salesforce", "rest", "force.com"],
     "env": {
-        "ROOT": ".",
+        "ROOT": "value",
         "PORT": "80",
         "DEBUG": "False",
         "SSL": "False",
-        "SSL_KEY": "",
-        "SSL_CERT": "",
-        "SSL_CA": ""
+        "SSL_KEY": {
+            "value": "",
+            "required": false
+        },
+        "SSL_CERT": {
+            "value": "",
+            "required": false
+        },
+        "SSL_CA": {
+             "value": "",
+            "required": false
+        }
     }
 }
