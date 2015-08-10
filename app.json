@@ -7,19 +7,6 @@
     "env": {
         "ROOT": "value",
         "PORT": "80",
-        "DEBUG": "False",
-        "SSL": "False",
-        "SSL_KEY": {
-            "value": "",
-            "required": false
-        },
-        "SSL_CERT": {
-            "value": "",
-            "required": false
-        },
-        "SSL_CA": {
-             "value": "",
-            "required": false
-        }
+        "DEBUG": "False"
     }
 }

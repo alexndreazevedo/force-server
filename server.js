@@ -13,19 +13,19 @@ var express = require('express'),
 var root        = argv.r || argv.root || process.env.ROOT || '.',
     port        = argv.p || argv.port || process.env.PORT || '8200',
     debug       = argv.d || argv.debug || process.env.DEBUG || false,
-    ssl         = argv.s || argv.ssl || process.env.SSL || false,
-    ssl_key     = argv.sslkey || argv['ssl-key'] || process.env.SSL_KEY || 'ssl/server.key',
-    ssl_cert    = argv.sslcert || argv['ssl-cert'] || process.env.SSL_CERT || 'ssl/server.crt',
-    ssl_ca      = argv.sslca || argv['ssl-ca'] || process.env.SSL_CA || 'ssl/ca.crt';
+    ssl         = argv.s || argv.ssl || false,
+    ssl_key     = argv.sslkey || argv['ssl-key'] || 'ssl/server.key',
+    ssl_cert    = argv.sslcert || argv['ssl-cert'] || 'ssl/server.crt',
+    ssl_ca      = argv.sslca || argv['ssl-ca'] || 'ssl/ca.crt';
 
 // SSL credentials
-var credentials = {
+var credentials = (ssl ? {
     key: fs.readFileSync(root + '/' + ssl_key),
     cert: fs.readFileSync(root + '/' + ssl_cert),
     ca: fs.readFileSync(root + '/' + ssl_ca),
     requestCert: true,
     rejectUnauthorized: false
-};
+} : {});
     
 
 if (argv.h || argv.help) {
