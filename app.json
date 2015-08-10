@@ -5,7 +5,7 @@
     "logo": "https://developer.salesforce.com/resource/images/platform-force-cloud.png",
     "keywords": ["ssl", "cors", "nodejs", "proxy", "salesforce", "rest", "force.com"],
     "env": {
-        "ROOT": "value",
+        "ROOT": ".",
         "PORT": "80",
         "DEBUG": "False"
     }
