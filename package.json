@@ -1,6 +1,6 @@
 {
   "name": "ssl-forceserver",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Development server for Force.com with SSL",
   "bin": {
     "ssl-forceserver": "./bin/ssl-forceserver.js"
