@@ -2,7 +2,7 @@
 
 SSL ForceServer is a server to be used with [CORS](https://pt.wikipedia.org/wiki/Cross-origin_resource_sharing) that allow to use SSL certificates. It was designed to connect applications that use Salesforce OAuth and REST services. The original [force-server](https://github.com/ccoenraets/force-server) was created by [Christophe Coenraets](https://github.com/ccoenraets) and extended after need to connect to [SalesForce REST API](https://developer.salesforce.com/page/Getting_Started_with_the_Force.com_REST_API) without use the [SalesForce MobileSDK](https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/) for to get access in special by [User-Password Flow](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_understanding_username_password_oauth_flow.htm).
 
-SSL ForceServer allow to use SSL certificate and send requests in JSON, instead _x-www-form-urlencoded_, beyond provide two main features:
+SSL ForceServer allow to use SSL certificate and requests in JSON, instead _x-www-form-urlencoded_, beyond provide two main features:
 
 - **Proxy server** to avoid cross-domain policy issues when invoking Salesforce REST services.
 
